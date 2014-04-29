@@ -2,7 +2,7 @@ require "rubygems"
 require "sinatra"
 require "pony"
 
-require_relative "models/delivery_config"
+require_relative "config/delivery_config"
 
 # Configuration
 DELIVERY_CONFIG = DeliveryConfig.new(ENV)
