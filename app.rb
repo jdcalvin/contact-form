@@ -14,18 +14,20 @@ class App < Sinatra::Application
   end
 
   post "/" do
-    form_contents = params.map do |key, value|
+    email = params[:email]
+    subject = "Contact form submission"
+    @content = params.map do |key, value|
       "#{key}: #{value}"
     end.join("\n")
-    puts "Sending:", form_contents
+    puts "Sending:", @content
     puts "Referer: #{request.referer}"
     puts "Pony config: #{Pony.options.inspect}"
 
     Pony.mail(
       to: DELIVERY_CONFIG.recipient,
-      from: DELIVERY_CONFIG.sender,
-      subject: "Contact Form Submission",
-      body: form_contents,
+      from: email,
+      subject: subject
+      body: erb[:email]
     )
 
     redirect DELIVERY_CONFIG.redirect || request.referrer
