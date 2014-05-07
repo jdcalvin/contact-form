@@ -16,9 +16,9 @@ class App < Sinatra::Application
   post "/" do
     subject = "Contact form submission"
     content = params.map do |key, value|
-      "<h3>#{key.sub!('_', ' ')}</h3>#{value}"
+      "<h3>#{key.sub('_', ' ')}</h3>#{value}"
     end.join("\n")
-    
+
     puts "Sending:", content
     puts "Referer: #{request.referer}"
     puts "Pony config: #{Pony.options.inspect}"
@@ -27,7 +27,6 @@ class App < Sinatra::Application
       to: DELIVERY_CONFIG.recipient,
       from: DELIVERY_CONFIG.sender,
       subject: subject,
-      :headers => { 'Content-Type' => 'text/html'},
       html_body: content,
     )
 
