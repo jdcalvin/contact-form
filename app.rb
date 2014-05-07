@@ -25,7 +25,7 @@ class App < Sinatra::Application
 
     Pony.mail(
       to: DELIVERY_CONFIG.recipient,
-      from: email,
+      from: DELIVERY_CONFIG.sender,
       subject: subject,
       body: erb[:email]
     )
