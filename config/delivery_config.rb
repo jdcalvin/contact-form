@@ -36,13 +36,6 @@ class DeliveryConfig
     @env.fetch(REDIRECT_KEY, nil)
   end
 
-  def make_html(opts)
-    opts.each_pair do |k,v|
-      puts "<h1>k</h1>"
-      puts "v"
-    end
-  end
-
   private
 
   def smtp_delivery_options
