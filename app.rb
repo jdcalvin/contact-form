@@ -14,12 +14,13 @@ class App < Sinatra::Application
   end
 
   post "/" do
-    email = params[:email]
     subject = "Contact form submission"
-    @content = params.map do |key, value|
+    content = params.map do |key, value|
       "#{key}: #{value}"
     end.join("\n")
-    puts "Sending:", @content
+    body = make_html(@content)
+
+    puts "Sending:", content
     puts "Referer: #{request.referer}"
     puts "Pony config: #{Pony.options.inspect}"
 
@@ -27,7 +28,8 @@ class App < Sinatra::Application
       to: DELIVERY_CONFIG.recipient,
       from: DELIVERY_CONFIG.sender,
       subject: subject,
-      body: erb[:email]
+      :headers => { 'Content-Type' => 'text/html'},
+      html_body: body,
     )
 
     redirect DELIVERY_CONFIG.redirect || request.referrer
